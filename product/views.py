@@ -8,8 +8,10 @@ from .filters import ProductsFilter
 from rest_framework.pagination import PageNumberPagination
 from rest_framework import status
 from django.db.models import Avg
+from drf_yasg.utils import swagger_auto_schema
 
 @api_view(['GET'])
+@swagger_auto_schema(tags=["Products"])
 def get_all_products(request):
     filterset = ProductsFilter(request.GET,queryset=Product.objects.all().order_by('id'))
     count = filterset.qs.count()
@@ -21,13 +23,15 @@ def get_all_products(request):
     return Response({"products":serializer.data, "per page":number_of_products,"count":count})
 
 @api_view(['GET'])
+@swagger_auto_schema(tags=["Products"])
 def get_by_id_product(request,pk):
     products = get_object_or_404(Product,id=pk)
     serializer = ProductSerializer(products,many=False)
     print(products)
     return Response({"product":serializer.data})
-    
+
 @api_view(['POST'])
+@swagger_auto_schema(tags=["Products"])
 @permission_classes([IsAuthenticated,IsAdminUser])
 def new_product(request):
     data = request.data
@@ -42,8 +46,10 @@ def new_product(request):
     else:
         return Response(serializer.errors)
     
-    
+
+
 @api_view(['PUT'])
+@swagger_auto_schema(tags=["Products"])
 @permission_classes([IsAuthenticated,IsAdminUser])
 def update_product(request,pk):
     product = get_object_or_404(Product,id=pk)
