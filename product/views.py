@@ -32,40 +32,33 @@ def get_by_id_product(request,pk):
 
 @api_view(['POST'])
 @swagger_auto_schema(tags=["Products"])
-@permission_classes([IsAuthenticated,IsAdminUser])
+@permission_classes([IsAuthenticated, IsAdminUser])
 def new_product(request):
-    data = request.data
-    serializer = ProductSerializer(data = data)
-    
+    serializer = ProductSerializer(data=request.data)
+
     if serializer.is_valid():
-        product = Product.objects.create(**data,user=request.user)
-        res = ProductSerializer(product,many=False)
-        
-        return Response({"product":res.data})
-    
+        serializer.save(user=request.user)
+        return Response({"product": serializer.data})
     else:
-        return Response(serializer.errors)
-    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @api_view(['PUT'])
 @swagger_auto_schema(tags=["Products"])
-@permission_classes([IsAuthenticated,IsAdminUser])
-def update_product(request,pk):
-    product = get_object_or_404(Product,id=pk)
-    
-    if product.user != request.user:
-        return Response({"error":"Sorry, you can't update"},status=status.HTTP_403_FORBIDDEN)
+@permission_classes([IsAuthenticated, IsAdminUser])
+def update_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
 
-    product.name = request.data['name']
-    product.description = request.data['description']
-    product.price = request.data['price']
-    product.brand = request.data['brand']
-    product.category = request.data['category']
-    
-    product.save()
-    serializer = ProductSerializer(product,many=False)
-    return Response({"product":serializer.data})    
+    if product.user != request.user:
+        return Response({"error": "Sorry, you can't update"}, status=status.HTTP_403_FORBIDDEN)
+
+    serializer = ProductSerializer(product, data=request.data, partial=True)
+
+    if serializer.is_valid():
+        serializer.save()
+        return Response({"product": serializer.data})
+    else:
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
  
 @api_view(['DELETE'])
