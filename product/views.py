@@ -10,17 +10,16 @@ from rest_framework import status
 from django.db.models import Avg
 from drf_yasg.utils import swagger_auto_schema
 
+
 @api_view(['GET'])
 @swagger_auto_schema(tags=["Products"])
 def get_all_products(request):
-    filterset = ProductsFilter(request.GET,queryset=Product.objects.all().order_by('id'))
+    filterset = ProductsFilter(request.GET, queryset=Product.objects.all().order_by('id'))
     count = filterset.qs.count()
-    number_of_products = 2
-    paginator = PageNumberPagination()
-    paginator.page_size = number_of_products
-    queryset = paginator.paginate_queryset(filterset.qs,request) 
-    serializer = ProductSerializer(queryset,many=True)
-    return Response({"products":serializer.data, "per page":number_of_products,"count":count})
+    queryset = filterset.qs  
+    serializer = ProductSerializer(queryset, many=True)
+    return Response({"products": serializer.data, "count": count})
+
 
 @api_view(['GET'])
 @swagger_auto_schema(tags=["Products"])
