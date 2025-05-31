@@ -42,14 +42,13 @@ def new_product(request):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['PUT'])
 @swagger_auto_schema(tags=["Products"])
 @permission_classes([IsAuthenticated, IsAdminUser])
 def update_product(request, pk):
     product = get_object_or_404(Product, id=pk)
 
-    if product.user != request.user:
+    if product.user != request.user and not request.user.is_superuser:
         return Response({"error": "Sorry, you can't update"}, status=status.HTTP_403_FORBIDDEN)
 
     serializer = ProductSerializer(product, data=request.data, partial=True)
@@ -60,18 +59,16 @@ def update_product(request, pk):
     else:
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
- 
 @api_view(['DELETE'])
-@permission_classes([IsAuthenticated,IsAdminUser])
-def delete_product(request,pk):
-    product = get_object_or_404(Product,id=pk)
-    
-    if product.user != request.user:
-        return Response({"error":"Sorry, you can't delete"},status=status.HTTP_403_FORBIDDEN)
+@permission_classes([IsAuthenticated, IsAdminUser])
+def delete_product(request, pk):
+    product = get_object_or_404(Product, id=pk)
+
+    if product.user != request.user and not request.user.is_superuser:
+        return Response({"error": "Sorry, you can't delete"}, status=status.HTTP_403_FORBIDDEN)
 
     product.delete()
-    return Response({"details":"Done"},status=status.HTTP_200_OK)    
-
+    return Response({"details": "Done"}, status=status.HTTP_200_OK)
   
 # Reviews 
  
