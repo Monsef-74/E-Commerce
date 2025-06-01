@@ -77,7 +77,6 @@ def new_order(request):
                 quantity = i['quantity'],
                 price = i['price']
             )
-            product.stock -= item.quantity
-            product.save()
+           
         serializer = OrderSerializer(order,many=False)
         return Response(serializer.data)
