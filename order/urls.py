@@ -7,7 +7,10 @@ urlpatterns = [
     path('orders/', views.get_orders,name='get_orders'), 
     path('orders/<str:pk>/', views.get_order,name='get_order'), 
 
-     path('orders/<str:pk>/process/', views.process_order,name='process_order'), 
-     path('orders/<str:pk>/delete/', views.delete_order,name='delete_order'), 
+    path('orders/<str:pk>/process/', views.process_order,name='process_order'), 
+    path('orders/<str:pk>/delete/', views.delete_order,name='delete_order'), 
+    path('recommendations/', views.get_product_recommendations_api, name='product_recommendations_api'),
 
 ]
+
+

@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
     'order.apps.OrderConfig',
+    'try_on.apps.TryOnConfig',
+    'try_on_glasses.apps.TryOnGlassesConfig',
     
     'rest_framework',
     'django_filters',
@@ -108,6 +110,7 @@ DATABASES = {
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (   

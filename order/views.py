@@ -4,6 +4,12 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated ,IsAdminUser
 from rest_framework import status
 
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from django.contrib.auth.decorators import login_required
+
+
+
 from product.models import Product   
 from .serializers import OrderSerializer
 from .models import Order,OrderItem
@@ -80,3 +86,18 @@ def new_order(request):
            
         serializer = OrderSerializer(order,many=False)
         return Response(serializer.data)
+    
+    
+
+from django.shortcuts import render
+from django.http import JsonResponse
+
+from .utils import get_initial_recommendations_from_db 
+
+def get_product_recommendations_api(request):
+
+    recommendations_df = get_initial_recommendations_from_db()
+    
+    recommendations_list = recommendations_df.to_dict('records')
+    
+    return JsonResponse({'recommendations': recommendations_list})

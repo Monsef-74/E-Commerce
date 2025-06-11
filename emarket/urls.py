@@ -26,6 +26,7 @@ from drf_yasg import openapi
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 schema_view = get_schema_view(
    openapi.Info(
       title="API Documentation",
@@ -43,6 +44,9 @@ urlpatterns = [
     path('api/',include('product.urls')),
     path('api/',include('account.urls')),
     path('api/',include('order.urls')),
+    path('api/',include('try_on.urls')),
+    path('api/', include('try_on_glasses.urls')),
+
     
     path('api/token/', TokenObtainPairView.as_view()),
     
@@ -59,3 +63,6 @@ handler500 = 'utils.error_view.handler500'
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+    
+ 
