@@ -45,7 +45,7 @@ urlpatterns = [
     path('api/',include('account.urls')),
     path('api/',include('order.urls')),
     path('api/',include('try_on.urls')),
-    path('api/', include('try_on_glasses.urls')),
+    #path('api/', include('try_on_glasses.urls')),
 
     
     path('api/token/', TokenObtainPairView.as_view()),

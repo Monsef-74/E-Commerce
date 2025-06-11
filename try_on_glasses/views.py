@@ -2,10 +2,10 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.files.storage import default_storage
 import os
-import cv2
-import numpy as np
-import mediapipe as mp
-
+#import cv2
+#import numpy as np
+#import mediapipe as mp
+"""
 # إعداد face_mesh
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh = mp_face_mesh.FaceMesh(
@@ -111,3 +111,5 @@ def upload_and_process(request):
             'status': 'error',
             'message': 'Invalid request. Use POST with person_image and glasses_image files.'
         })
+        
+"""
