@@ -88,16 +88,3 @@ def new_order(request):
         return Response(serializer.data)
     
     
-
-from django.shortcuts import render
-from django.http import JsonResponse
-
-from .utils import get_initial_recommendations_from_db 
-
-def get_product_recommendations_api(request):
-
-    recommendations_df = get_initial_recommendations_from_db()
-    
-    recommendations_list = recommendations_df.to_dict('records')
-    
-    return JsonResponse({'recommendations': recommendations_list})

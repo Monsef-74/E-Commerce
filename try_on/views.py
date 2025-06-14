@@ -21,7 +21,7 @@ def tryon_api(request):
         }
 
         headers = {
-            "x-rapidapi-key": "18df7ab432mshcbc1a74ad9bb347p16e814jsnbfc25cc11110",
+            "x-rapidapi-key": "5562a07ee3msh73589be5c842986p1edaaejsn3ae0b05e0182",
             "x-rapidapi-host": "try-on-diffusion.p.rapidapi.com"
         }
 
