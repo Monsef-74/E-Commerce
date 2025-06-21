@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'order.apps.OrderConfig',
     'try_on.apps.TryOnConfig',
-    'try_on_glasses.apps.TryOnGlassesConfig',
     
     'rest_framework',
     'django_filters',
